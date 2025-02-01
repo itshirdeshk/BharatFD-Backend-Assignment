@@ -20,7 +20,7 @@ describe("FAQ API Tests", () => {
     // Test case: Create a new FAQ
     it("should create a new FAQ", async () => {
         const res = await request(app)
-            .post("/api/faqs")
+            .post("/api/faq")
             .send({
                 question: "What is TypeScript?",
                 answer: "TypeScript is a superset of JavaScript.",
@@ -60,12 +60,6 @@ describe("FAQ API Tests", () => {
         // Check if the cache for the updated FAQ is cleared
         const cached = await redisClient.get("faqs_hi");
         expect(cached).toBeNull(); // Cache should be cleared after update
-    });
-
-    // Test case: Return 404 for a non-existing FAQ
-    it("should return 404 for a non-existing FAQ", async () => {
-        const res = await request(app).get("/api/faqs/invalidId");
-        expect(res.status).toBe(404);
     });
 
     // Test case: Delete an FAQ

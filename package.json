@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "devstart": "npx tsx watch src/index.ts"
+    "devstart": "npx tsx watch src/index.ts",
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
