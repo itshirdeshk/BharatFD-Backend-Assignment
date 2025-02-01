@@ -98,7 +98,13 @@ A simple FAQ management system that provides a RESTful API and a React-based adm
        ```
 
 
-4. **Run the backend server:**
+4. **Build the backend server:**
+
+   ```bash
+   npm run build
+   ```
+
+5. **Run the backend server:**
 
    ```bash
    npm start
