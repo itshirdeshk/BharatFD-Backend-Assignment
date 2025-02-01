@@ -6,8 +6,6 @@ export const errorHandler = (
     req: Request,
     res: Response
 ): void => {
-    console.error("Error:", error);
-
     if (error.name === "MongoServerError") {
         const errorCode = error.code;
         res.status(422).json({

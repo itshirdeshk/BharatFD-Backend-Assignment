@@ -12,25 +12,21 @@ export const updateFaq = async (req: ValidatedRequest<UpdateFaqRequestSchema>) =
     const { id, question, answer } = req.body;
 
     if (question && !answer) {
-        try {
-            const [question_hi, question_bn] = await Promise.all([
-                translateText(question, 'hi'),
-                translateText(question, 'bn'),
-            ]);
+        const [question_hi, question_bn] = await Promise.all([
+            translateText(question, 'hi'),
+            translateText(question, 'bn'),
+        ]);
 
-            if (question_hi.error || question_bn.error) {
-                throw new Error(400, GeneralErrorCodes.TRANSLATION_ERROR, R.TRANSLATION_ERROR, 'Translation failed. Please try again.');
-            }
-
-            const faq = await FAQ.findByIdAndUpdate(id, { question, question_hi: question_hi.translatedText, question_bn: question_bn.translatedText });
-
-            // Clear caches since data has changed  
-            await redisClient.del(`${CACHE_KEY}_en`, `${CACHE_KEY}_hi`, `${CACHE_KEY}_bn`);
-
-            return faq;
-        } catch (error) {
-            console.error(error);
+        if (question_hi.error || question_bn.error) {
+            throw new Error(400, GeneralErrorCodes.TRANSLATION_ERROR, R.TRANSLATION_ERROR, 'Translation failed. Please try again.');
         }
+
+        const faq = await FAQ.findByIdAndUpdate(id, { question, question_hi: question_hi.translatedText, question_bn: question_bn.translatedText });
+
+        // Clear caches since data has changed  
+        await redisClient.del(`${CACHE_KEY}_en`, `${CACHE_KEY}_hi`, `${CACHE_KEY}_bn`);
+
+        return faq;
     } else if (answer && !question) {
         const [answer_hi, answer_bn] = await Promise.all([
             translateText(answer, 'hi'),
