@@ -37,7 +37,7 @@ A simple FAQ management system that provides a RESTful API and a React-based adm
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/itshirdeshk/bharatdf-backend-assignment.git
+   git clone https://github.com/itshirdeshk/BharatFD-Backend-Assignment.git
    cd bharatdf-backend-assignment/backend
    ```
 
@@ -129,7 +129,7 @@ A simple FAQ management system that provides a RESTful API and a React-based adm
 3. **Run the React development server:**
 
    ```bash
-   npm start
+   npm run dev
    ```
 
    The admin panel will open in your default browser at [http://localhost:3000](http://localhost:3000).
