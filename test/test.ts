@@ -26,14 +26,14 @@ describe("FAQ API Tests", () => {
                 answer: "TypeScript is a superset of JavaScript.",
             });
 
-        expect(res.status).toBe(201);
+        expect(res.status).toBe(200);
         expect(res.body).toHaveProperty("_id");
         faqId = res.body._id; // Save the FAQ ID for later tests
     });
 
     // Test case: Fetch all FAQs
     it("should fetch all FAQs", async () => {
-        const res = await request(app).get("/api/faqs");
+        const res = await request(app).get("/api/faq");
         expect(res.status).toBe(200);
         expect(res.body).toBeInstanceOf(Array);
         expect(res.body.length).toBeGreaterThan(0); // Ensure at least one FAQ is returned
@@ -41,7 +41,7 @@ describe("FAQ API Tests", () => {
 
     // Test case: Fetch FAQs by language
     it("should fetch FAQ by language", async () => {
-        const res = await request(app).get("/api/faqs?lang=hi");
+        const res = await request(app).get("/api/faq?lang=hi");
         expect(res.status).toBe(200);
         expect(res.body).toBeInstanceOf(Array);
     });
@@ -49,8 +49,9 @@ describe("FAQ API Tests", () => {
     // Test case: Update an FAQ and clear the cache
     it("should update an FAQ and clear cache", async () => {
         const res = await request(app)
-            .put(`/api/faqs/${faqId}`)
+            .put(`/api/faq`)
             .send({
+                id: faqId,
                 question: "Updated Question?",
             });
 
@@ -64,7 +65,7 @@ describe("FAQ API Tests", () => {
 
     // Test case: Delete an FAQ
     it("should delete an FAQ", async () => {
-        const res = await request(app).delete(`/api/faqs/${faqId}`);
+        const res = await request(app).delete(`/api/faq/${faqId}`);
         expect(res.status).toBe(200);
 
         // Verify the FAQ is deleted

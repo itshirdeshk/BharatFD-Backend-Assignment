@@ -1,5 +1,5 @@
 module.exports = {
+    preset: "ts-jest", // Use ts-jest for TypeScript
     testEnvironment: "node", // Use Node.js environment
-    setupFilesAfterEnv: ["./jest.setup.js"], // Optional: Add global setup
     testTimeout: 10000, // Increase timeout if needed
 };
