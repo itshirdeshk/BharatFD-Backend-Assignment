@@ -1,5 +1,8 @@
 import React, { useEffect, useState, FormEvent, ChangeEvent } from 'react';
 import axios from 'axios';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css'; // Import Quill's default CSS
+import './QuillEditor.css'; // Custom CSS for dark mode/gray background
 
 interface FAQ {
   id: string;
@@ -8,13 +11,9 @@ interface FAQ {
 }
 
 const AdminPanel: React.FC = () => {
-  // FAQs list from backend
   const [faqs, setFaqs] = useState<FAQ[]>([]);
-  // For editing, if null then we're creating a new FAQ
   const [editingFAQ, setEditingFAQ] = useState<FAQ | null>(null);
-  // Form state for question and answer
   const [formData, setFormData] = useState({ question: '', answer: '' });
-  // For showing messages (optional)
   const [message, setMessage] = useState<string>('');
 
   // Fetch FAQs from API
@@ -32,9 +31,14 @@ const AdminPanel: React.FC = () => {
   }, []);
 
   // Update form values as user types
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  // Handle Quill editor change
+  const handleQuillChange = (value: string) => {
+    setFormData(prev => ({ ...prev, answer: value }));
   };
 
   // Handle form submission for both create and update
@@ -43,16 +47,17 @@ const AdminPanel: React.FC = () => {
     try {
       if (editingFAQ) {
         // Update FAQ
-        await axios.put(`http://localhost:8080/api/faq`, {...formData, id: editingFAQ.id});
+        await axios.put(`http://localhost:8080/api/faq`, { ...formData, id: editingFAQ.id });
         setMessage('FAQ updated successfully!');
       } else {
         // Create new FAQ
         await axios.post('http://localhost:8080/api/faq', formData);
         setMessage('FAQ created successfully!');
       }
+      // Reset form and fetch updated FAQs
       setFormData({ question: '', answer: '' });
       setEditingFAQ(null);
-      fetchFaqs();
+      await fetchFaqs(); // Refresh the list
     } catch (error) {
       console.error('Error saving FAQ:', error);
       setMessage('Error saving FAQ');
@@ -70,11 +75,22 @@ const AdminPanel: React.FC = () => {
     try {
       await axios.delete(`http://localhost:8080/api/faq/${faqId}`);
       setMessage('FAQ deleted successfully!');
-      fetchFaqs();
+      await fetchFaqs(); // Refresh the list
     } catch (error) {
       console.error('Error deleting FAQ:', error);
       setMessage('Error deleting FAQ');
     }
+  };
+
+  // Quill modules for toolbar customization
+  const modules = {
+    toolbar: [
+      [{ header: [1, 2, 3, false] }],
+      ['bold', 'italic', 'underline', 'strike'],
+      [{ list: 'ordered' }, { list: 'bullet' }],
+      ['link', 'image'],
+      ['clean'],
+    ],
   };
 
   return (
@@ -106,13 +122,12 @@ const AdminPanel: React.FC = () => {
             <label htmlFor="answer" style={{ display: 'block', marginBottom: '5px' }}>
               Answer:
             </label>
-            <textarea
-              id="answer"
-              name="answer"
+            <ReactQuill
               value={formData.answer}
-              onChange={handleInputChange}
-              style={{ padding: '8px', width: '300px', height: '100px' }}
-              required
+              onChange={handleQuillChange}
+              modules={modules}
+              placeholder="Type your answer here..."
+              className="quill-editor-gray" // Apply custom CSS class
             />
           </div>
           <button type="submit" style={{ padding: '8px 16px', marginRight: '10px' }}>
@@ -150,7 +165,9 @@ const AdminPanel: React.FC = () => {
             faqs.map(faq => (
               <tr key={faq.id}>
                 <td style={{ border: '1px solid #ddd', padding: '8px' }}>{faq.question}</td>
-                <td style={{ border: '1px solid #ddd', padding: '8px' }}>{faq.answer}</td>
+                <td style={{ border: '1px solid #ddd', padding: '8px' }}>
+                  <div dangerouslySetInnerHTML={{ __html: faq.answer }} />
+                </td>
                 <td style={{ border: '1px solid #ddd', padding: '8px' }}>
                   <button onClick={() => handleEdit(faq)} style={{ marginRight: '10px' }}>
                     Edit
