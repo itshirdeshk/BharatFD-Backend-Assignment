@@ -7,7 +7,7 @@ export interface IFaq extends Document {
     answer_hi?: string;
     question_bn?: string;
     answer_bn?: string;
-    getTranslated(lang: string): { question: string; answer: string };
+    getTranslated(lang: string): { id: string; question: string; answer: string };
 }
 
 const FaqSchema = new Schema<IFaq>({
@@ -23,6 +23,7 @@ const FaqSchema = new Schema<IFaq>({
 FaqSchema.methods.getTranslated = function (lang: string) {
     let question = this.question;
     let answer = this.answer;
+    const id = this._id;
 
     if (lang === 'hi' && this.question_hi && this.answer_hi) {
         question = this.question_hi;
@@ -30,8 +31,11 @@ FaqSchema.methods.getTranslated = function (lang: string) {
     } else if (lang === 'bn' && this.question_bn && this.answer_bn) {
         question = this.question_bn;
         answer = this.answer_bn;
+    } else if (lang === 'en' && this.question_bn && this.answer_bn) {
+        question = this.question;
+        answer = this.answer;
     }
-    return { question, answer };
+    return { id, question, answer };
 };
 
 export default model<IFaq>('Faq', FaqSchema);

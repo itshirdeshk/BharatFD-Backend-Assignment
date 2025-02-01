@@ -25,7 +25,7 @@ export const updateFaq = async (req: ValidatedRequest<UpdateFaqRequestSchema>) =
             const faq = await FAQ.findByIdAndUpdate(id, { question, question_hi: question_hi.translatedText, question_bn: question_bn.translatedText });
 
             // Clear caches since data has changed  
-            await redisClient.del(`${CACHE_KEY}_hi`, `${CACHE_KEY}_bn`);
+            await redisClient.del(`${CACHE_KEY}_en`, `${CACHE_KEY}_hi`, `${CACHE_KEY}_bn`);
 
             return faq;
         } catch (error) {
@@ -44,7 +44,7 @@ export const updateFaq = async (req: ValidatedRequest<UpdateFaqRequestSchema>) =
         const faq = await FAQ.findByIdAndUpdate(id, { answer, answer_hi: answer_hi.translatedText, answer_bn: answer_bn.translatedText });
 
         // Clear caches since data has changed
-        await redisClient.del(`${CACHE_KEY}_hi`, `${CACHE_KEY}_bn`);
+        await redisClient.del(`${CACHE_KEY}_en`, `${CACHE_KEY}_hi`, `${CACHE_KEY}_bn`);
 
         return faq;
     } else {
@@ -69,7 +69,7 @@ export const updateFaq = async (req: ValidatedRequest<UpdateFaqRequestSchema>) =
         });
 
         // Clear caches since data has changed
-        await redisClient.del(`${CACHE_KEY}_hi`, `${CACHE_KEY}_bn`);
+        await redisClient.del(`${CACHE_KEY}_en`, `${CACHE_KEY}_hi`, `${CACHE_KEY}_bn`);
         return faq;
     }
 };

@@ -10,6 +10,6 @@ export const deleteFaq = async (req: ValidatedRequest<DeleteFaqRequestSchema>) =
 
     await FAQ.findByIdAndDelete(id);
     
-    await redisClient.del(`${CACHE_KEY}_hi`, `${CACHE_KEY}_bn`);
+    await redisClient.del(`${CACHE_KEY}_en`, `${CACHE_KEY}_hi`, `${CACHE_KEY}_bn`);
     return { id };
 };

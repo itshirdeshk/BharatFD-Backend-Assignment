@@ -2,13 +2,9 @@ import React, { useEffect, useState, FormEvent, ChangeEvent } from 'react';
 import axios from 'axios';
 
 interface FAQ {
-  _id: string;
+  id: string;
   question: string;
   answer: string;
-  question_hi?: string;
-  answer_hi?: string;
-  question_bn?: string;
-  answer_bn?: string;
 }
 
 const AdminPanel: React.FC = () => {
@@ -47,7 +43,7 @@ const AdminPanel: React.FC = () => {
     try {
       if (editingFAQ) {
         // Update FAQ
-        await axios.put(`http://localhost:8080/api/faq`, {...formData, id: editingFAQ._id});
+        await axios.put(`http://localhost:8080/api/faq`, {...formData, id: editingFAQ.id});
         setMessage('FAQ updated successfully!');
       } else {
         // Create new FAQ
@@ -72,7 +68,7 @@ const AdminPanel: React.FC = () => {
   // Delete a FAQ
   const handleDelete = async (faqId: string) => {
     try {
-      await axios.delete(`/api/faq/${faqId}`);
+      await axios.delete(`http://localhost:8080/api/faq/${faqId}`);
       setMessage('FAQ deleted successfully!');
       fetchFaqs();
     } catch (error) {
@@ -152,14 +148,14 @@ const AdminPanel: React.FC = () => {
         <tbody>
           {Array.isArray(faqs) && faqs.length > 0 ? (
             faqs.map(faq => (
-              <tr key={faq._id}>
+              <tr key={faq.id}>
                 <td style={{ border: '1px solid #ddd', padding: '8px' }}>{faq.question}</td>
                 <td style={{ border: '1px solid #ddd', padding: '8px' }}>{faq.answer}</td>
                 <td style={{ border: '1px solid #ddd', padding: '8px' }}>
                   <button onClick={() => handleEdit(faq)} style={{ marginRight: '10px' }}>
                     Edit
                   </button>
-                  <button onClick={() => handleDelete(faq._id)}>
+                  <button onClick={() => handleDelete(faq.id)}>
                     Delete
                   </button>
                 </td>

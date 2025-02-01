@@ -33,6 +33,6 @@ export const createFaq = async (req: ValidatedRequest<CreateFaqRequestSchema>) =
 
     await faq.save();
     // Clear caches since data has changed
-    await redisClient.del(`${CACHE_KEY}_hi`, `${CACHE_KEY}_bn`);
+    await redisClient.del(`${CACHE_KEY}_en`, `${CACHE_KEY}_hi`, `${CACHE_KEY}_bn`);
     return faq;
 };
