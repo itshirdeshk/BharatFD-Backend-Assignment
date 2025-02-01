@@ -1,4 +1,3 @@
-import { translateText } from '../../services/translation';
 import FAQ from '../../models/faq';
 import redisClient from '../../config/redisClient';
 import { ValidatedRequest } from 'express-joi-validation';

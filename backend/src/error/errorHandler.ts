@@ -1,11 +1,10 @@
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import { GeneralErrorCodes, MongoErrorCodeMapping, MongoErrorMessageMapping, R } from "./errorCodes";
 
 export const errorHandler = (
     error: any,
     req: Request,
-    res: Response,
-    next: NextFunction
+    res: Response
 ): void => {
     console.error("Error:", error);
 
