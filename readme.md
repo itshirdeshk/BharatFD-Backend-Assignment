@@ -134,11 +134,11 @@ The backend provides the following REST API endpoints:
 
 ### 1. Get All FAQs
 
-- **Endpoint:** `GET http://localhost:8080/api/faq?lang=hi`
+- **Endpoint:** `GET http://localhost:8080/api/faq?lang=<code>`
 - **Example:**
 
   ```bash
-  curl http://localhost:8080/api/faq?lang=hi
+  curl http://localhost:8080/api/faq?lang=<code>
   ```
 
 ### 2. Create a New FAQ
