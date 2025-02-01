@@ -58,44 +58,44 @@ A simple FAQ management system that provides a RESTful API and a React-based adm
 
 5. **Redis Setup Using Docker:**
 
-   > **Note:** Our backend application uses Redis for caching. If you don't have Redis installed on your system, you can easily run it using Docker.
-   >
-   > **Prerequisites:**  
-   > - [Docker](https://www.docker.com/get-started) must be installed and running on your machine.
-   >
-   > **Steps to Run Redis with Docker:**
-   > 
-   > 1. **Open a Terminal:**  
-   >    Open your terminal or command prompt.
-   >
-   > 2. **Pull the Redis Docker Image:**  
-   >    Run the following command to pull the latest Redis image from Docker Hub:
-   >    ```bash
-   >    docker pull redis:latest
-   >    ```
-   >
-   > 3. **Run the Redis Container:**  
-   >    Start a new container from the Redis image and map the container's port 6379 to your host's port 6379:
-   >    ```bash
-   >    docker run --name my-redis -p 6379:6379 -d redis
-   >    ```
-   >    - `--name my-redis` gives your container a friendly name.
-   >    - `-p 6379:6379` maps port 6379 from the container to your local machine.
-   >    - `-d` runs the container in detached mode.
-   >
-   > 4. **Verify the Container is Running:**  
-   >    Check that your Redis container is up and running with:
-   >    ```bash
-   >    docker ps
-   >    ```
-   >    You should see a container named `my-redis` in the list.
-   >
-   > 5. **Configure Your Backend:**  
-   >    In your backend application's `.env` file (as shown above), ensure the Redis host and port are set:
-   >    ```dotenv
-   >    REDIS_HOST=localhost
-   >    REDIS_PORT=6379
-   >    ```
+    **Note:** Our backend application uses Redis for caching. If you don't have Redis installed on your system, you can easily run it using Docker.
+   
+    **Prerequisites:**  
+    - [Docker](https://www.docker.com/get-started) must be installed and running on your machine.
+   
+    **Steps to Run Redis with Docker:**
+    
+    1. **Open a Terminal:**  
+       Open your terminal or command prompt.
+   
+    2. **Pull the Redis Docker Image:**  
+       Run the following command to pull the latest Redis image from Docker Hub:
+       ```bash
+       docker pull redis:latest
+       ```
+   
+    3. **Run the Redis Container:**  
+       Start a new container from the Redis image and map the container's port 6379 to your host's port 6379:
+       ```bash
+       docker run --name my-redis -p 6379:6379 -d redis
+       ```
+       - `--name my-redis` gives your container a friendly name.
+       - `-p 6379:6379` maps port 6379 from the container to your local machine.
+       - `-d` runs the container in detached mode.
+   
+    4. **Verify the Container is Running:**  
+       Check that your Redis container is up and running with:
+       ```bash
+       docker ps
+       ```
+       You should see a container named `my-redis` in the list.
+   
+    5. **Configure Your Backend:**  
+       In your backend application's `.env` file (as shown above), ensure the Redis host and port are set:
+       ```dotenv
+       REDIS_HOST=localhost
+       REDIS_PORT=6379
+       ```
 
 
 4. **Run the backend server:**
