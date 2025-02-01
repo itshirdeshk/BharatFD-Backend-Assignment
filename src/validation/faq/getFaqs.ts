@@ -9,5 +9,10 @@ export interface GetFaqsRequestSchema
 }
 
 export const getFaqsSchema = Joi.object({
-    lang: Joi.string().required(),
+    lang: Joi.string()
+        .optional()
+        .not("")
+        .messages({
+            "string.empty": "Language parameter cannot be empty.",
+        }),
 });
