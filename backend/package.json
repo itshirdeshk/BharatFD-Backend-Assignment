@@ -6,7 +6,8 @@
     "build": "tsc",
     "start": "npx tsx src/index.js",
     "devstart": "npx tsx watch src/index.ts",
-    "test": "jest"
+    "test": "jest",
+    "lint": "npx eslint ."
   },
   "keywords": [],
   "author": "",

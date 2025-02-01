@@ -132,7 +132,7 @@ A simple FAQ management system that provides a RESTful API and a React-based adm
    npm run dev
    ```
 
-   The admin panel will open in your default browser at [http://localhost:3000](http://localhost:3000).
+   The admin panel will open in your default browser at [http://localhost:5173](http://localhost:5173).
 
 ## API Usage Examples
 
@@ -218,7 +218,7 @@ Contributions are welcome! Please follow these guidelines:
 
 - The project uses **ES6+** and **TypeScript**.
 - Ensure that your code is linted and formatted properly.
-- Run `npm run lint` (or the corresponding command) to check for style issues before committing.
+- Run `npm run lint` to check for style issues before committing.
 
 ### Running Tests
 
