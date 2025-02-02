@@ -21,7 +21,7 @@ export const updateFaq = async (req: ValidatedRequest<UpdateFaqRequestSchema>) =
             throw new Error(400, GeneralErrorCodes.TRANSLATION_ERROR, R.TRANSLATION_ERROR, 'Translation failed. Please try again.');
         }
 
-        const faq = await FAQ.findByIdAndUpdate(id, { question, question_hi: question_hi.translatedText, question_bn: question_bn.translatedText });
+        const faq = await FAQ.findByIdAndUpdate(id, { question, question_hi: question_hi.translatedText, question_bn: question_bn.translatedText }, { new: true });
 
         // Clear caches since data has changed  
         await redisClient.del(`${CACHE_KEY}_en`, `${CACHE_KEY}_hi`, `${CACHE_KEY}_bn`);
@@ -37,7 +37,7 @@ export const updateFaq = async (req: ValidatedRequest<UpdateFaqRequestSchema>) =
             throw new Error(400, GeneralErrorCodes.TRANSLATION_ERROR, R.TRANSLATION_ERROR, 'Translation failed. Please try again.');
         }
 
-        const faq = await FAQ.findByIdAndUpdate(id, { answer, answer_hi: answer_hi.translatedText, answer_bn: answer_bn.translatedText });
+        const faq = await FAQ.findByIdAndUpdate(id, { answer, answer_hi: answer_hi.translatedText, answer_bn: answer_bn.translatedText }, { new: true });
 
         // Clear caches since data has changed
         await redisClient.del(`${CACHE_KEY}_en`, `${CACHE_KEY}_hi`, `${CACHE_KEY}_bn`);
@@ -62,7 +62,7 @@ export const updateFaq = async (req: ValidatedRequest<UpdateFaqRequestSchema>) =
             question_bn: question_bn.translatedText,
             answer_hi: answer_hi.translatedText,
             answer_bn: answer_bn.translatedText,
-        });
+        }, { new: true });
 
         // Clear caches since data has changed
         await redisClient.del(`${CACHE_KEY}_en`, `${CACHE_KEY}_hi`, `${CACHE_KEY}_bn`);
